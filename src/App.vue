@@ -1,0 +1,30 @@
+<script setup>
+import { RouterLink, RouterView } from 'vue-router'
+</script>
+
+<template>
+
+
+  <div>
+    <router-view></router-view>
+  </div>
+</template>
+
+<style> 
+html,
+body {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+}
+#app {
+    font-family: "Avenir", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #2c3e50;
+    widows: 100%;
+    height: 100%;
+}
+</style>
