@@ -18,3 +18,20 @@ export function getUserByToken(token) {
     }
   })
 }
+
+// 修改用户信息
+export function update(data) {
+  return request({
+    url: '/user/update',
+    method: 'post',
+    data
+  })
+}
+
+export function add(data) {
+  return request({
+    url: '/user/add',
+    method: 'post',
+    data
+  })
+}

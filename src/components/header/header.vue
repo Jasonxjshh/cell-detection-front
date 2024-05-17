@@ -9,7 +9,8 @@
                 <el-button style="border: white; ">{{ user.name }}<el-icon><arrow-down /></el-icon></el-button>
                 <template #dropdown>
                     <el-dropdown-menu>
-                        <el-dropdown-item>个人信息</el-dropdown-item>
+                        <el-dropdown-item @click="gotoPage('/profile')">个人信息</el-dropdown-item>
+                        <el-dropdown-item >修改密码</el-dropdown-item>
                         <el-dropdown-item @click="quit">退出系统</el-dropdown-item>
                     </el-dropdown-menu>
                 </template>
@@ -25,12 +26,14 @@ import { ref, onBeforeMount, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { getUserByToken } from "../../http/api"
 import { useRoleStore, useTokenStore } from '../../stores/user.js'
+import Profile from '../main/profile.vue'
 
 
 const tokenStore = useTokenStore()
 const roleStore = useRoleStore()
 const router = useRouter()
 const user = ref({});
+const imgurl = 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
 onMounted(() => {
     const token = localStorage.getItem('token')
     getUserByToken(token).then(u => {
@@ -48,6 +51,10 @@ const quit = () => {
     tokenStore.clearTokenAuth();
     roleStore.clearRoleAuth();
     router.push({ name: 'login' })
+};
+
+const gotoPage = (root) => {
+    router.push(root)
 }
 </script>
 
