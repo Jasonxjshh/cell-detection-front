@@ -1,9 +1,8 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import login from '@/pages/login.vue'
-import adminDashboard from '@/pages/adminDashboard.vue'
-import doctorDashboard from '@/pages/doctorDashboard.vue'
-import patientDashboard from '@/pages/patientDashboard.vue'
 import home from '@/pages/home.vue'
+import doctorManagement from "@/components/main/doctorManagement"
+import profile from "@/components/main/profile"
 
 
 
@@ -14,7 +13,22 @@ const routes = [
     path: '/',
     name: 'home',
     component: home,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '/doctor_management',
+        name: 'doctor_management',
+        component: doctorManagement,
+        meta: {requiresAuth: true}
+      },
+
+      {
+        path: '/profile',
+        name: 'profile',
+        component: profile,
+        meta: {requiresAuth: true}
+      }
+    ]
   },
   {
     path: '/login',

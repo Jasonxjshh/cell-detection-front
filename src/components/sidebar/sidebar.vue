@@ -12,8 +12,8 @@
                         </el-icon>
                         <span>系统管理</span>
                     </template>
-                    <el-menu-item index="doctor-management">医生管理</el-menu-item>
-                    <el-menu-item index="patient-management">患者管理</el-menu-item>
+                    <el-menu-item index="doctor_management">医生管理</el-menu-item>
+                    <el-menu-item index="patient_management">患者管理</el-menu-item>
                 </el-sub-menu>
                     <!-- 医生菜单 -->
                     <el-sub-menu v-if="role === '1'" index="doctor">
@@ -23,7 +23,7 @@
                             </el-icon>
                             <span>系统管理</span>
                         </template>
-                        <el-menu-item index="patient-management">患者管理</el-menu-item>
+                        <el-menu-item index="patient_management">患者管理</el-menu-item>
                     </el-sub-menu>
                     <el-sub-menu v-if="role === '1'" index="cell">
                         <template #title>
@@ -32,8 +32,8 @@
                             </el-icon>
                             <span>细胞检测</span>
                         </template>
-                        <el-menu-item index="upload-image">上传图片</el-menu-item>
-                        <el-menu-item index="result-management">结果管理</el-menu-item>
+                        <el-menu-item index="upload_image">上传图片</el-menu-item>
+                        <el-menu-item index="result_management">结果管理</el-menu-item>
                     </el-sub-menu>
 
                     <!-- 患者菜单 -->
@@ -45,7 +45,7 @@
                             <span>就医管理</span>
                         </template>
                         <el-menu-item index="info">基本信息</el-menu-item>
-                        <el-menu-item index="cell-result">细胞结果</el-menu-item>
+                        <el-menu-item index="cell_result">细胞结果</el-menu-item>
                     </el-sub-menu>
 
                     <!-- 公共菜单 -->
