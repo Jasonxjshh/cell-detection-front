@@ -4,8 +4,6 @@ import home from '@/pages/home.vue'
 import doctorManagement from "@/components/main/doctorManagement"
 import patientManagement from "@/components/main/patientManagement"
 import profile from "@/components/main/profile"
-import InquiryFive from "@/components/main/InquiryFive"
-import uploadMessage from "@/components/main/uploadMessage"
 
 
 import InquiryFive from '@/components/main/InquiryFive.vue'
@@ -22,13 +20,6 @@ const routes = [
     meta: { requiresAuth: true },
     children: [
 
-
-      {
-        path: '/InquiryFive',
-        name: 'InquiryFive',
-        component: InquiryFive,
-        meta: { requiresAuth: true }
-      },
 
 
 
