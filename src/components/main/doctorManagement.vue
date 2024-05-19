@@ -15,41 +15,68 @@
       </el-form-item>
     </el-form>
     <div>
-      <el-button type="success" :icon="Plus" @click="dialogFormVisible = true">
+      <el-button type="success" :icon="Plus"
+        @click="dialogFormVisible = true, dialogTitle = '新增用户', roleInputDisabled = false, addorUpdateMode = 0">
         <span>新增</span>
       </el-button>
-      <el-button type="primary" :icon="Edit">
+      <el-button type="primary" :icon="Edit" @click="fillDialog">
         <span>修改</span>
       </el-button>
       <el-button type="danger" :icon="Delete">
         <span>删除</span>
       </el-button>
     </div>
-    <el-dialog v-model="dialogFormVisible" title="新增用户" width="500">
+
+    <el-table ref="multipleTableRef" :data="tData.tableData" :table-layout="tableLayout"
+      @selection-change="handleSelectionChange" class="demo-table-inline" stripe height=526>
+      <el-table-column type="selection" width="55">
+
+      </el-table-column>
+
+      <el-table-column label="编号" property="id" header-align="center" align="center" width='100'>
+      </el-table-column>
+      <el-table-column property="name" label="姓名" header-align="center" align="center" width='150' />
+      <el-table-column property="username" label="用户名" header-align="center" align="center" width='150' />
+      <el-table-column property="phone" label="手机号" header-align="center" align="center" width='200' />
+      <el-table-column property="email" label="邮箱" header-align="center" align="center" width='200' />
+      <el-table-column property="age" label="年龄" header-align="center" align="center" width='100' />
+      <el-table-column property="sex" label="性别" header-align="center" align="center" width='100' />
+      <el-table-column property="createAt" label="创建时间" header-align="center" align="center" width='300' />
+      <el-table-column label="Operations" header-align="left" align="left">
+        <template #default="scope">
+          <el-button type="primary" :icon="Edit" circle
+            @click="  fillDialog" 
+            @mouseover = "multipleTableRef.toggleRowSelection(scope.row, true)" 
+           />
+          <el-button type="danger" :icon="Delete" circle @click="deletUser" />
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-dialog v-model="dialogFormVisible" :title="dialogTitle" width="500">
 
       <el-form :model="dialogForm">
 
         <el-row style="margin-bottom: 10px; ">
           <el-col :span="12">
             <el-form-item label="姓名">
-              <el-input v-model="dialogForm.name" style="width: 175px;" />
+              <el-input v-model="dialogForm.name" style="width: 175px;" placeholder="请输入您的姓名" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="用户名">
-              <el-input v-model="dialogForm.username" style="width: 175px;" />
+              <el-input v-model="dialogForm.username" style="width: 175px;" placeholder="请输入您的用户名" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row style="margin-bottom: 10px; ">
           <el-col :span="12">
             <el-form-item label="手机">
-              <el-input v-model="dialogForm.phone" style="width: 175px;" />
+              <el-input v-model="dialogForm.phone" style="width: 175px;" placeholder="请输入您的手机" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="邮 箱" label-width=52>
-              <el-input v-model="dialogForm.email" style="width: 175px;" />
+              <el-input v-model="dialogForm.email" style="width: 175px;" placeholder="请输入您的邮箱" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -64,14 +91,14 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="年 龄">
-              <el-input v-model="dialogForm.age" style="width: 175px; margin-left: 10px" />
+              <el-input v-model="dialogForm.age" style="width: 175px; margin-left: 10px" placeholder="请输入您的年龄" />
             </el-form-item>
           </el-col>
         </el-row>
 
 
         <el-form-item label="角色">
-          <el-select v-model="dialogForm.role" placeholder="请您选择你的角色">
+          <el-select v-model="dialogForm.role" placeholder="请您选择你的角色" :disabled="roleInputDisabled">
             <el-option label="管理员" value='0' />
             <el-option label="医生" value='1' />
             <el-option label="患者" value='2' />
@@ -83,33 +110,18 @@
       <template #footer>
         <div class="dialog-footer">
           <el-button @click="dialogFormVisible = false">Cancel</el-button>
-          <el-button type="primary" @click="dialogFormVisible = false, addUser()">
+          <el-button type="primary" @click="dialogFormVisible = false, addorUpdateUser(1)">
             Confirm
           </el-button>
         </div>
       </template>
 
     </el-dialog>
-    <el-table ref="multipleTableRef" :data="tableData" :table-layout="tableLayout"
-      @selection-change="handleSelectionChange" class="demo-table-inline" stripe>
-      <el-table-column type="selection" width="55" />
-      <el-table-column label="编号" header-align="center" align="center" width='100'>
-        <template #default="scope">{{ scope.row.date }}</template>
-      </el-table-column>
-      <el-table-column property="name" label="姓名" header-align="center" align="center" width='150' />
-      <el-table-column property="username" label="用户名" header-align="center" align="center" width='150' />
-      <el-table-column property="phone" label="手机号" header-align="center" align="center" width='200' />
-      <el-table-column property="email" label="邮箱" header-align="center" align="center" width='200' />
-      <el-table-column property="age" label="年龄" header-align="center" align="center" width='100' />
-      <el-table-column property="sex" label="性别" header-align="center" align="center" width='100' />
-      <el-table-column property="createAt" label="创建时间" header-align="center" align="center" width='300' />
-      <el-table-column label="Operations" header-align="left" align="left">
-        <template #default="scope">
-          <el-button type="primary" :icon="Edit" circle />
-          <el-button type="danger" :icon="Delete" circle />
-        </template>
-      </el-table-column>
-    </el-table>
+    <div style="margin-top: 20px;">
+      <el-pagination @current-change="handleCurrentChange, getAllUserData(1)" small background
+        layout=" prev, pager, next, total" :total="totalItems" v-model:current-page="currentPage" />
+    </div>
+
 
   </div>
 
@@ -118,90 +130,54 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
-import { ElTable } from 'element-plus'
-import { add } from "@/http/api.js"
+import { onMounted, reactive, ref } from 'vue'
+import { ElTable, rowContextKey } from 'element-plus'
+import { add, getUsersByPage, update } from "@/http/api.js"
 import {
   Plus,
   Delete,
-  Edit
+  Edit,
+  User
 } from '@element-plus/icons-vue'
 
+onMounted(() => {
+  getAllUserData(1)
+})
 
 const tableLayout = "fixed"
 const dialogFormVisible = ref(false)
+const dialogTitle = ref("")
+const addorUpdateMode = ref(0)
+const roleInputDisabled = ref(false)
+const currentPage = ref(1)
+const pageSize = ref(10)
+const totalItems = ref(0)
 const formInline = reactive({
   name: '',
   phone: '',
   date: '',
 })
 
-const onSubmit = () => {
-  console.log('submit!')
-}
+const tData = reactive({
+  tableData: [] as User[]
+})
+
+
+const dialogForm = reactive({
+  id: null,
+  name: null,
+  username: null,
+  password: null,
+  phone: null,
+  email: null,
+  sex: null,
+  age: null,
+  role: null
+})
 
 
 interface User {
-  date: string
-  name: string
-  address: string
-}
-
-const multipleTableRef = ref<InstanceType<typeof ElTable>>()
-const multipleSelection = ref<User[]>([])
-const toggleSelection = (rows?: User[]) => {
-  if (rows) {
-    rows.forEach((row) => {
-
-      multipleTableRef.value!.toggleRowSelection(row, undefined)
-    })
-  } else {
-    multipleTableRef.value!.clearSelection()
-  }
-}
-const handleSelectionChange = (val: User[]) => {
-  multipleSelection.value = val
-}
-
-const tableData: User[] = [
-  {
-    date: '2016-05-03',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-02',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-04',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-08',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-06',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-07',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-]
-
-const dialogForm = reactive({
+  id: Number,
   name: '张三',
   username: 'Jason',
   password: '123456',
@@ -209,29 +185,108 @@ const dialogForm = reactive({
   email: '15855559999@qq.com',
   sex: '男',
   age: 18,
-  role: "1"
-})
+  role: 1
+  avatar: String,
+  createAt: Date,
+  updateAt: Date,
+  createBy: Number,
+  updateBy: Number
+}
+
+const multipleTableRef = ref<InstanceType<typeof ElTable>>()
+const multipleSelection = ref<User[]>([])
+
+const getAllUserData = (role) => {
+  let params = {
+    currentPage: currentPage.value,
+    pageSize: pageSize.value,
+    role: role
+  };
+  console.log(params);
+
+  getUsersByPage(params).then((res: any) => {
+    console.log(res);
+    tData.tableData = res.list
+    totalItems.value = res.total; // 修改总页数
+  });
+}
+
+const handleCurrentChange = (val: number) => {
+  console.log(val);
+  currentPage.value = val;
+};
+const onSubmit = () => {
+  console.log('submit!')
+}
+
+
+
+const handleSelectionChange = (val: User[]) => {
+  multipleSelection.value = val
+  console.log(multipleSelection);
+
+}
+
 
 const changeRole = () => {
-  if (dialogForm.role === "0") {
+  if (dialogForm.role == 0) {
     dialogForm.role = "管理员"
-  } else if (dialogForm.role === "1") {
+  } else if (dialogForm.role == 1) {
     dialogForm.role = "医生"
-  } else if (dialogForm.role === "2") {
+  } else if (dialogForm.role == 2) {
     dialogForm.role = "患者"
   }
 }
-const addUser = () => {
+const addorUpdateUser = (role) => {
+  dialogForm.password = "123456"
+  if (addorUpdateMode.value == 0) {
+    add(dialogForm).then(res => {
+      getAllUserData(role)
+    })
+      .catch(res => {
+        console.log("异常处理:" + res.message);
+        alert(res.message)
+      })
+  }
+  else if (addorUpdateMode.value == 1) {
+    dialogForm.role = multipleSelection.value[0].role
 
-  add(dialogForm).then(res => {
-
-  })
-    .catch(res => {
+    dialogForm.id = multipleSelection.value[0].id
+    update(dialogForm).then(res => {
+      getAllUserData(role)
+    }).catch(res => {
       console.log("异常处理:" + res.message);
       alert(res.message)
-    }
+    })
+  }
+  
 
-    )
+}
+
+const fillDialog = () => {
+  if (multipleSelection.value.length != 1) {
+    alert("请选择一个您要编辑的用户！")
+  } else {
+    console.log(multipleSelection.value[0]);
+    
+    dialogForm.name = multipleSelection.value[0].name
+    dialogForm.username = multipleSelection.value[0].username
+    dialogForm.phone = multipleSelection.value[0].phone
+    dialogForm.email = multipleSelection.value[0].email
+    dialogForm.sex = multipleSelection.value[0].sex
+    dialogForm.age = multipleSelection.value[0].age
+    dialogForm.role = multipleSelection.value[0].role
+    changeRole()
+    roleInputDisabled.value = true
+    dialogFormVisible.value = true
+    dialogTitle.value = "修改用户"
+    addorUpdateMode.value = 1
+  }
+}
+
+
+const deletUser = () => {
+
 }
 </script>
 

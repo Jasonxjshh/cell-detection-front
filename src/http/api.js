@@ -28,10 +28,19 @@ export function update(data) {
   })
 }
 
+// 增加一个用户
 export function add(data) {
   return request({
     url: '/user/add',
     method: 'post',
     data
+  })
+}
+
+// 获得所有公告信息
+export function getUsersByPage(params) {
+  return request({
+      url: '/user/getUsersByPage/'+ Number(params['currentPage']) + '/' + Number(params['pageSize'])+ '/' + Number(params['role']),
+      method: 'get',
   })
 }

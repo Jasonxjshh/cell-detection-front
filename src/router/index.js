@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import login from '@/pages/login.vue'
 import home from '@/pages/home.vue'
 import doctorManagement from "@/components/main/doctorManagement"
+import patientManagement from "@/components/main/patientManagement"
 import profile from "@/components/main/profile"
 
 
@@ -19,6 +20,12 @@ const routes = [
         path: '/doctor_management',
         name: 'doctor_management',
         component: doctorManagement,
+        meta: {requiresAuth: true}
+      },
+      {
+        path: '/patient_management',
+        name: 'patient_management',
+        component: patientManagement,
         meta: {requiresAuth: true}
       },
 
