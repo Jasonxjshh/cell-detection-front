@@ -48,7 +48,7 @@
             @click="openInquiryDialog(scope.row)" 
             @mouseover = "multipleTableRef.toggleRowSelection(scope.row, true)" 
            />
-          <el-button type="danger" :icon="Delete" circle @click="deletUser" />
+          <el-button type="danger" :icon="Delete" circle @click="opendetect" />
         </template>
       </el-table-column>
     </el-table>
@@ -58,6 +58,14 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="inquiryDialogVisible = false">取消</el-button>
         <el-button type="primary" @click="inquiryDialogVisible = false">确定</el-button>
+      </span>
+    </el-dialog>
+ <!-- 弹出的浮窗 -->
+    <el-dialog v-model="detectVisible" width="60%" title="脑脊液细胞检测系统">
+      <detect v-if="detectVisible" />
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="detectVisible = false">取消</el-button>
+        <el-button type="primary" @click="detectVisible = false">确定</el-button>
       </span>
     </el-dialog>
     <el-dialog v-model="dialogFormVisible" :title="dialogTitle" width="500">
@@ -148,6 +156,7 @@ import {
   User
 } from '@element-plus/icons-vue'
 import inquiryFive from './InquiryFive.vue'
+import detect from './detect.vue'
 onMounted(() => {
   getAllUserData(1)
 })
@@ -155,6 +164,7 @@ onMounted(() => {
 const tableLayout = "fixed"
 const dialogFormVisible = ref(false)
 const inquiryDialogVisible = ref(false)
+const detectVisible = ref(false)
 const dialogTitle = ref("")
 const addorUpdateMode = ref(0)
 const roleInputDisabled = ref(false)
@@ -272,9 +282,10 @@ const addorUpdateUser = (role) => {
 
 }
 const openInquiryDialog = (row) => { // 新增的用于打开浮窗的方法
-  
-  localStorage.setItem("upload_user_img_id" , row.id)
   inquiryDialogVisible.value = true;
+}
+const opendetect = (row) => { // 新增的用于打开浮窗的方法
+  detectVisible.value = true;
 }
 const fillDialog = () => {
   if (multipleSelection.value.length != 1) {
