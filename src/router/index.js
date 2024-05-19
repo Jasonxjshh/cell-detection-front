@@ -6,6 +6,7 @@ import patientManagement from "@/components/main/patientManagement"
 import profile from "@/components/main/profile"
 
 
+import InquiryFive from '@/components/main/InquiryFive.vue'
 
 
 
@@ -16,6 +17,15 @@ const routes = [
     component: home,
     meta: { requiresAuth: true },
     children: [
+
+      {
+        path: '/InquiryFive',
+        name: 'InquiryFive',
+        component: InquiryFive,
+        meta: { requiresAuth: true }
+      },
+
+
       {
         path: '/doctor_management',
         name: 'doctor_management',

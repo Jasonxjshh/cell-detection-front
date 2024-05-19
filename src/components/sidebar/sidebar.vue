@@ -58,6 +58,17 @@
                         </template>
 
                     </el-menu-item>
+
+                     <el-menu-item  index="InquiryFive">
+                        <template #title>
+                            <el-icon>
+                                <house />
+                            </el-icon>
+                            <span>图片上传</span>
+                        </template>
+
+                    </el-menu-item>
+
             </el-menu>
         </el-row>
     </nav>
