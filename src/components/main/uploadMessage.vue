@@ -282,6 +282,8 @@ const addorUpdateUser = (role) => {
 
 }
 const openInquiryDialog = (row) => { // 新增的用于打开浮窗的方法
+
+  localStorage.setItem("upload_user_img_id" , row.id)
   inquiryDialogVisible.value = true;
 }
 const opendetect = (row) => { // 新增的用于打开浮窗的方法
