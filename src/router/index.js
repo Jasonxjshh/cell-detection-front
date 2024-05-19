@@ -20,6 +20,16 @@ const routes = [
     meta: { requiresAuth: true },
     children: [
 
+      
+      {
+        path: '/InquiryFive',
+        name: 'InquiryFive',
+        component: InquiryFive,
+        meta: { requiresAuth: true }
+      },
+
+
+
       {
         path: '/uploadMessage',
         name: 'uploadMessage',

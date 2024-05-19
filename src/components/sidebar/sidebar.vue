@@ -58,8 +58,8 @@
                         </template>
 
                     </el-menu-item>
-<!-- 
-                     <el-menu-item  index="InquiryFive">
+
+                     <!-- <el-menu-item  index="InquiryFive">
                         <template #title>
                             <el-icon>
                                 <house />
@@ -67,15 +67,15 @@
                             <span>图片上传</span>
                         </template>
 
-                    </el-menu-item>
- -->
+                    </el-menu-item> -->
+
 
                     <el-menu-item  index="uploadMessage">
                         <template #title>
                             <el-icon>
                                 <house />
                             </el-icon>
-                            <span>图片上传</span>
+                            <span>图片上传and检测</span>
                         </template>
 
                     </el-menu-item>
