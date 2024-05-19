@@ -3,7 +3,7 @@
     <div class="upload-wrapper">
       <el-upload
         class="upload-box"
-        action="http://localhost:8080/api/img/fileUpload"
+        action="http://localhost:8080/api/img/user_up_img"
         accept="image/*"
         :drag="true"
         :multiple="true"
@@ -11,6 +11,7 @@
         list-type="picture"
         :file-list="fileList"
         :before-upload="beforeUpload"
+        :data="{user_id:user_id}"
         :on-success="handleUploadSuccess"
       >
         <i class="el-icon-upload"></i>
@@ -42,9 +43,20 @@ export default {
         fileName: '',
         filePath: '',
         time: ''
-      },
+      },  
+      user_id : localStorage.getItem("upload_user_img_id" ),
+
     }
   },
+
+  
+
+  // updated() {
+  //   // 在每次局部页面内容更新后执行Viewer.js的实例化操作
+  //   this.user_id = localStorage.getItem("upload_user_img_id" ) ; 
+  //   this.$message(this.user_id)
+  // } , 
+
   methods: {
     beforeUpload(file) {
       if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
