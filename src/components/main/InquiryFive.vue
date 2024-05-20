@@ -44,8 +44,12 @@
           </el-descriptions>
           <el-divider></el-divider>
         </div>
-        <el-dialog :visible.sync="dialogVisible" width="50%">
+        <!-- <el-dialog :visible.sync="dialogVisible" width="50%">
           <img :src="previewUrl" width="100%" alt="预览图片" />
+        </el-dialog> -->
+        <el-dialog v-model="dialogVisible" width="60%" title="脑脊液细胞检测系统">
+          <img :src="previewUrl" width="100%" alt="预览图片" />
+          
         </el-dialog>
       </el-card>
     </div>

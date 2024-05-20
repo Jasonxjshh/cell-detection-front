@@ -8,6 +8,8 @@ import profile from "@/components/main/profile"
 
 import InquiryFive from '@/components/main/InquiryFive.vue'
 
+import uploadMessage from '@/components/main/uploadMessage.vue'
+
 
 
 const routes = [
@@ -17,6 +19,17 @@ const routes = [
     component: home,
     meta: { requiresAuth: true },
     children: [
+
+
+
+
+      {
+        path: '/uploadMessage',
+        name: 'uploadMessage',
+        component: uploadMessage,
+        meta: { requiresAuth: true }
+      },
+
 
       {
         path: '/InquiryFive',
