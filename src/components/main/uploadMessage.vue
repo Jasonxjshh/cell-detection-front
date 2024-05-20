@@ -2,30 +2,30 @@
   <div class="container">
     <el-form :inline="true" :model="formInline" :span="24" class="demo-form-inline">
       <el-form-item label="患者姓名" class="custom-lable">
-        <el-input v-model="formInline.name" placeholder="请输入医生姓名" clearable />
+        <el-input v-model="formInline.name" placeholder="请输入患者姓名" clearable />
       </el-form-item>
-      <el-form-item label="手机号码" class="custom-lable">
-        <el-input v-model="formInline.phone" placeholder="请输入手机号码" clearable />
-      </el-form-item>
-      <el-form-item label="创建时间" class="custom-lable">
-        <el-date-picker v-model="formInline.date" type="date" placeholder="选择时间" clearable />
-      </el-form-item>
+<!--      <el-form-item label="手机号码" class="custom-lable">-->
+<!--        <el-input v-model="formInline.phone" placeholder="请输入手机号码" clearable />-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="创建时间" class="custom-lable">-->
+<!--        <el-date-picker v-model="formInline.date" type="date" placeholder="选择时间" clearable />-->
+<!--      </el-form-item>-->
       <el-form-item class="custom-lable">
         <el-button type="primary" @click="onSubmit" style="height: 90%;">Query</el-button>
       </el-form-item>
     </el-form>
-    <div>
-      <el-button type="success" :icon="Plus"
-        @click="dialogFormVisible = true, dialogTitle = '新增用户', roleInputDisabled = false, addorUpdateMode = 0">
-        <span>新增</span>
-      </el-button>
-      <el-button type="primary" :icon="Edit" @click="fillDialog">
-        <span>修改</span>
-      </el-button>
-      <el-button type="danger" :icon="Delete">
-        <span>删除</span>
-      </el-button>
-    </div>
+<!--    <div>-->
+<!--      <el-button type="success" :icon="Plus"-->
+<!--        @click="dialogFormVisible = true, dialogTitle = '新增用户', roleInputDisabled = false, addorUpdateMode = 0">-->
+<!--        <span>新增</span>-->
+<!--      </el-button>-->
+<!--      <el-button type="primary" :icon="Edit" @click="fillDialog">-->
+<!--        <span>修改</span>-->
+<!--      </el-button>-->
+<!--      <el-button type="danger" :icon="Delete">-->
+<!--        <span>删除</span>-->
+<!--      </el-button>-->
+<!--    </div>-->
 
     <el-table ref="multipleTableRef" :data="tData.tableData" :table-layout="tableLayout"
       @selection-change="handleSelectionChange" class="demo-table-inline" stripe height=526>
@@ -158,7 +158,7 @@ import {
 import inquiryFive from './InquiryFive.vue'
 import detect from './detect.vue'
 onMounted(() => {
-  getAllUserData(1)
+  getAllUserData(2)
 })
 
 const tableLayout = "fixed"
