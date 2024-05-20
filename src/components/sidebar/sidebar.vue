@@ -32,8 +32,8 @@
                             </el-icon>
                             <span>细胞检测</span>
                         </template>
-                        <el-menu-item index="upload_image">上传图片</el-menu-item>
-                        <el-menu-item index="result_management">结果管理</el-menu-item>
+                        <el-menu-item index="uploadMessage">上传和检测</el-menu-item>
+                        <!-- <el-menu-item index="result_management">结果管理</el-menu-item> -->
                     </el-sub-menu>
 
                     <!-- 患者菜单 -->
@@ -68,17 +68,6 @@
                         </template>
 
                     </el-menu-item> -->
-
-
-                    <el-menu-item  index="uploadMessage">
-                        <template #title>
-                            <el-icon>
-                                <house />
-                            </el-icon>
-                            <span>图片上传and检测</span>
-                        </template>
-
-                    </el-menu-item>
 
             
             </el-menu>

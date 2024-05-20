@@ -29,9 +29,9 @@
 
     <el-table ref="multipleTableRef" :data="tData.tableData" :table-layout="tableLayout"
       @selection-change="handleSelectionChange" class="demo-table-inline" stripe height=526>
-      <el-table-column type="selection" width="55">
+      <!-- <el-table-column type="selection" width="55">
 
-      </el-table-column>
+      </el-table-column> -->
 
       <el-table-column label="编号" property="id" header-align="center" align="center" width='100'>
       </el-table-column>
