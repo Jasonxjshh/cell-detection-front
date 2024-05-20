@@ -22,7 +22,7 @@
       <el-button type="primary" :icon="Edit" @click="fillDialog">
         <span>修改</span>
       </el-button>
-      <el-button type="danger" :icon="Delete">
+      <el-button type="danger" :icon="Delete" @click="deleteUser(1)">
         <span>删除</span>
       </el-button>
     </div>
@@ -48,7 +48,7 @@
             @click="  fillDialog" 
             @mouseover = "multipleTableRef.toggleRowSelection(scope.row, true)" 
            />
-          <el-button type="danger" :icon="Delete" circle @click="deletUser" />
+          <el-button type="danger" :icon="Delete" circle @click="deleteUser(1)" />
         </template>
       </el-table-column>
     </el-table>
@@ -132,7 +132,7 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref } from 'vue'
 import { ElTable, rowContextKey } from 'element-plus'
-import { add, getUsersByPage, update } from "@/http/api.js"
+import { add, getUsersByPage, update, deleteUsers } from "@/http/api.js"
 import {
   Plus,
   Delete,
@@ -285,8 +285,23 @@ const fillDialog = () => {
 }
 
 
-const deletUser = () => {
+const deleteUser = (role) => {
+  if (multipleSelection.value.length == 0) {
+    alert("请选择您要删除的用户！")
+  } else {
+    const userIDs = []
+    multipleSelection.value.forEach((item) => {
+      userIDs.push(item.id)
+    })
+    
+    deleteUsers(userIDs).then(res => {
+    getAllUserData(role)
 
+    }).catch(res => {
+      console.log("异常处理:" + res.message);
+      alert(res.message)
+    })
+  }
 }
 </script>
 

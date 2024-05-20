@@ -28,6 +28,16 @@ export function update(data) {
   })
 }
 
+// 删除用户信息
+export function deleteUsers(data) {
+  return request({
+    url: '/user/deleteUsers',
+    method: 'post',
+    data
+  })
+}
+
+
 // 增加一个用户
 export function add(data) {
   return request({
