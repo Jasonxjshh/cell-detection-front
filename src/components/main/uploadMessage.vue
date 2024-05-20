@@ -37,18 +37,18 @@
       </el-table-column>
       <el-table-column property="name" label="姓名" header-align="center" align="center" width='150' />
       <el-table-column property="username" label="用户名" header-align="center" align="center" width='150' />
-      <el-table-column property="phone" label="手机号" header-align="center" align="center" width='200' />
-      <el-table-column property="email" label="邮箱" header-align="center" align="center" width='200' />
-      <el-table-column property="age" label="年龄" header-align="center" align="center" width='100' />
+<!--      <el-table-column property="phone" label="手机号" header-align="center" align="center" width='200' />-->
+<!--      <el-table-column property="email" label="邮箱" header-align="center" align="center" width='200' />-->
+      <el-table-column prop="age"  label="年龄" header-align="center" align="center" width='100' />
       <el-table-column property="sex" label="性别" header-align="center" align="center" width='100' />
-      <el-table-column property="createAt" label="创建时间" header-align="center" align="center" width='300' />
+<!--      <el-table-column property="createAt" label="创建时间" header-align="center" align="center" width='300' />-->
       <el-table-column label="Operations" header-align="left" align="left">
         <template #default="scope">
-          <el-button type="primary" :icon="Edit" circle
-            @click="openInquiryDialog(scope.row)" 
-            @mouseover = "multipleTableRef.toggleRowSelection(scope.row, true)" 
-           />
-          <el-button type="danger" :icon="Delete" circle @click="opendetect" />
+          <el-button type="primary"
+            @click="openInquiryDialog(scope.row)"
+            @mouseover = "multipleTableRef.toggleRowSelection(scope.row, true)"
+          >上传</el-button>
+          <el-button type="danger"   @click="opendetect" > 检测 </el-button>
         </template>
       </el-table-column>
     </el-table>
