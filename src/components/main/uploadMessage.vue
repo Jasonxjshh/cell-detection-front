@@ -1,3 +1,4 @@
+<!-- <script src="../../main.js"></script> -->
 <template>
   <div class="container">
     <el-form :inline="true" :model="formInline" :span="24" class="demo-form-inline">

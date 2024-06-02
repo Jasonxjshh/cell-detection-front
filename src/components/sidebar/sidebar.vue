@@ -59,6 +59,16 @@
 
                     </el-menu-item>
 
+                    <el-menu-item  index="Word">
+                      <template #title>
+                        <el-icon>
+                          <house />
+                        </el-icon>
+                        <span>文档</span>
+                      </template>
+
+                    </el-menu-item>
+
                      <!-- <el-menu-item  index="InquiryFive">
                         <template #title>
                             <el-icon>

@@ -8,14 +8,18 @@ import pinia from './stores'
 import axios from 'axios'
 import { useTokenStore } from './stores/user'
 
+// import axios from 'axios'
 
-
+// Vue.prototype.$http = axios
 
 
 const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
   }
+
+app.config.globalProperties.$http = axios;
+
 
 app.use(ElementPlus)
 app.use(router)

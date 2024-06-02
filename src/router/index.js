@@ -13,6 +13,9 @@ import uploadMessage from '@/components/main/uploadMessage.vue'
 import result from '@/components/main/result.vue'
 
 
+import Word from '@/components/main/Word.vue'
+
+
 
 const routes = [
   {
@@ -21,6 +24,18 @@ const routes = [
     component: home,
     meta: { requiresAuth: true },
     children: [
+
+
+
+
+      {
+        path: '/Word',
+        name: 'Word',
+        component: Word,
+        meta: { requiresAuth: true }
+      },
+
+
 
 
 
