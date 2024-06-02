@@ -73,14 +73,6 @@ const goToRegister = () => {
 		localStorage.setItem("role_2_user_id" , res.id ) ; 
 		router.push({ name: 'home' })
 		
-	})
-		.catch(res => {
-			console.log("异常处理:" + res.message);
-			alert(res.message)
-		}
-
-		)
-
 }
 
 </script>
