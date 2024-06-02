@@ -2,7 +2,7 @@
 <template>
   <div id="login">
     <div class="bg"></div>
-   <div class="top-nav">
+   <!-- <div class="top-nav">
        <el-menu
          mode="horizontal"
          background-color="#f2f2f2"
@@ -26,28 +26,29 @@
            </el-dropdown-menu>
          </el-dropdown>
        </div>
-     </div>
+     </div> -->
 
   <div class="content">
     <div class="upload-img-container">
-     <el-upload
-            class="upload-demo"
-            drag
-            action="http://localhost:8080/api/detect/get"
-            method="post"
-            :on-success="handleSuccess"
-            @error="handleError"
-            multiple>
-            <i class="el-icon-upload"></i>
-            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-            <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
-          </el-upload>
+<!--     <el-upload-->
+<!--            class="upload-demo"-->
+<!--            drag-->
+<!--            action="http://localhost:8080/api/detect/get"-->
+<!--            method="post"-->
+<!--            :on-success="handleSuccess"-->
+<!--            @error="handleError"-->
+<!--            multiple>-->
+<!--            <i class="el-icon-upload"></i>-->
+<!--            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>-->
+<!--            <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>-->
+<!--          </el-upload>-->
     <section class="remind" >
-      <span class="image-title">处理后的图片</span>
-       <img :src="processedImage" v-if="processedImage" alt="Processed Image" />
+      <span class="image-title" v-if="!processedImage" >图片检测中...</span>
+      <span class="image-title" v-if="processedImage" >处理结果</span>
+       <!-- <img :src="processedImage" v-if="processedImage" alt="Processed Image" /> -->
 
-       <button @click="downloadImage" class="download-button">下载图片</button>
-       <button @click="downloadImage" class="download-button1">生成报表</button>
+      <!-- <button @click="downloadImage" class="download-button">下载图片</button> -->
+<!--       <button @click="downloadImage" class="download-button1">生成报表</button>-->
     </section>
      </div>
     </div>
@@ -75,6 +76,7 @@
 </template>
 
 <script>
+import { detection } from '@/http/api';
 import axios from 'axios';
 import {mapState} from 'vuex'
 export default {
@@ -91,24 +93,35 @@ export default {
       }
     }
   },
+
+  beforeMount() {
+
+    console.log("mounted-------" ,  localStorage.getItem("upload_user_img_id")  );
+    this.login( localStorage.getItem("upload_user_img_id") ) ;
+
+  } ,
+
   methods: {
     //用户登录请求后台处理
 
-    login() {
+    login(userid) {
       console.log("登录操作执行-------");
-      this.$axios({
-        url: `http://localhost:8080/api/detect/get`,
-        method: 'post',
-        data: {
+      // this.$axios({
+      //   url: `http://localhost:8080/api/detect/get`,
+      //   method: 'post',
+      //   data: {
 
-          ...this.formLabelAlign
-        },
-        headers: {'Content-Type': 'multipart/form-data' }
-      }).then(res=>{
-        console.log(res.data.data);
-        let resData = res.data.data;
-        let image = resData.image;
-        console.log(resData.cs);
+      //     userid
+      //   },
+      //   headers: {'Content-Type': 'multipart/form-data' }
+      // }).then(res=>{
+      //   console.log(res.data.data);
+      //   let resData = res.data.data;
+      //   let image = resData.image;
+      //   console.log(resData.cs);
+      // })
+      detection(userid).then(res => {
+        this.handleSuccess(res) ; 
       })
     },
     clickTag(key) {
@@ -123,26 +136,43 @@ export default {
        },
     handleSuccess(response, file, fileList) {
           console.log("Received response:", response);
-            if (response.data && response.data.image) {
-              this.processedImage = response.data.image;
+            if (response && response.image) {
+              this.processedImage = response.image;
 
               console.log("Processed image:", this.processedImage);
             } else {
               console.error('No image data found in response');
             }
 
-         if (response.data && response.data.resultJson && response.data.resultJson.map) {
-             const mapString = response.data.resultJson.map;
+         if (response && response.cumulativeMap ) {
+             const mapString = response.cumulativeMap;
              // 去掉首尾的大括号并以逗号分割
-             const entries = mapString.slice(1, -1).split(', ');
-             entries.forEach(entry => {
-               const [classname, number] = entry.split('=');
+            //  const entries = mapString.slice(1, -1).split(', ');
+            //  entries.forEach(entry => {
+            //    const [classname, number] = entry.split(':');
+            //    let o = {
+            //      classname: classname.trim(),
+            //      number: parseInt(number.trim())
+            //    };
+            //    this.tableData.push(o);
+            //  });
+
+            for ( var key in mapString ) {
+
+              const classname = key ; 
+
+              const number = mapString [ key ] ; 
+
+              
                let o = {
                  classname: classname.trim(),
-                 number: parseInt(number.trim())
+                 number: parseInt(number)
                };
                this.tableData.push(o);
-             });
+             
+
+            }
+
            } else {
              console.error('No map found in resultJson');
            }
@@ -154,14 +184,17 @@ export default {
       console.error("Upload error:",err);
     },
     downloadImage() {
-        const link = document.createElement('a');
-        link.href = this.processedImage; // 链接到图片URL
-        const date = new Date();
-        const filename = `image_${date.getFullYear()}${(date.getMonth()+1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}_${date.getHours().toString().padStart(2, '0')}${date.getMinutes().toString().padStart(2, '0')}${date.getSeconds().toString().padStart(2, '0')}.jpg`;
-        link.download = filename; // 设置下载的文件名
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        // const link = document.createElement('a');
+        // link.href = this.processedImage; // 链接到图片URL
+        // const date = new Date();
+        // const filename = `image_${date.getFullYear()}${(date.getMonth()+1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}_${date.getHours().toString().padStart(2, '0')}${date.getMinutes().toString().padStart(2, '0')}${date.getSeconds().toString().padStart(2, '0')}.jpg`;
+        // link.download = filename; // 设置下载的文件名
+        // document.body.appendChild(link);
+        // link.click();
+        // document.body.removeChild(link);
+
+        window.open('http://localhost:8080/api/detect/download-pdf','_blank');
+
       }
   },
   computed: mapState(["userInfo"]),

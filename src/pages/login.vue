@@ -54,6 +54,8 @@ const doSubmit = () => {
 		console.log(role);
 		tokenStore.setToken(token);
 		roleStore.setRole(role);
+		localStorage.setItem("role_2_user_name" , res.name ) ; 
+		localStorage.setItem("role_2_user_id" , res.id ) ; 
 		router.push({ name: 'home' })
 		
 	})

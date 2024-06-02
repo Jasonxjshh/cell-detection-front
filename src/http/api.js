@@ -19,6 +19,29 @@ export function getUserByToken(token) {
   })
 }
 
+// 检测
+export function detection(userid) {
+  return request({
+    url: '/detect/get_from_filepath',
+    method: 'post',
+    params:{
+      userid: userid 
+    }
+  })
+}
+
+// 检测
+export function downloaded() {
+  return request({
+    url: '/detect/get_from_filepath',
+    method: 'post',
+    params:{
+      userid: userid 
+    }
+  })
+}
+
+
 // 修改用户信息
 export function update(data) {
   return request({
@@ -44,3 +67,21 @@ export function getUsersByPage(params) {
       method: 'get',
   })
 }
+
+
+// 获得所有公告信息
+export function getUsersByID(params) {
+  return request({
+      url: '/user/getUsersByID/'+ Number(params['currentPage']) + '/' + Number(params['pageSize'])+ '/' + Number(params['id']),
+      method: 'get',
+  })
+}
+
+
+// // 获得所有公告信息
+// export function downloadpdf(params) {
+//   return request({
+//       url: '/detect/download-pdf/'+ Number(params['userid']) + '/' + Number(params['pageSize'])+ '/' + Number(params['id']),
+//       method: 'get',
+//   })
+// }

@@ -45,7 +45,7 @@
                             <span>就医管理</span>
                         </template>
                         <el-menu-item index="info">基本信息</el-menu-item>
-                        <el-menu-item index="cell_result">细胞结果</el-menu-item>
+                        <el-menu-item index="result">细胞结果</el-menu-item>
                     </el-sub-menu>
 
                     <!-- 公共菜单 -->

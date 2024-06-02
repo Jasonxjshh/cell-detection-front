@@ -10,6 +10,8 @@ import InquiryFive from '@/components/main/InquiryFive.vue'
 
 import uploadMessage from '@/components/main/uploadMessage.vue'
 
+import result from '@/components/main/result.vue'
+
 
 
 const routes = [
@@ -20,6 +22,14 @@ const routes = [
     meta: { requiresAuth: true },
     children: [
 
+
+
+      {
+        path: '/result',
+        name: 'result',
+        component: result,
+        meta: { requiresAuth: true }
+      },
 
 
 
