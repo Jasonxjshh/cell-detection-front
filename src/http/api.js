@@ -8,6 +8,15 @@ export function login(data) {
     data
   })
 }
+
+// 用户注册
+export function register(data) {
+  return request({
+    url: '/user/register',
+    method: 'post',
+    data
+  })
+}
 // 获取用户信息
 export function getUserByToken(token) {
   return request({
@@ -47,10 +56,45 @@ export function add(data) {
   })
 }
 
-// 获得所有公告信息
+// 获得所有用户信息
 export function getUsersByPage(params) {
   return request({
       url: '/user/getUsersByPage/'+ Number(params['currentPage']) + '/' + Number(params['pageSize'])+ '/' + Number(params['role']),
       method: 'get',
+  })
+}
+
+
+
+// 获得所有日志信息
+export function getLogsByPage(params) {
+  return request({
+      url: '/log/getLogsByPage/'+ Number(params['currentPage']) + '/' + Number(params['pageSize']),
+      method: 'get',
+  })
+}
+
+// 删除日志信息
+export function deleteLogs(data) {
+  return request({
+    url: '/log/deleteLogs',
+    method: 'post',
+    data
+  })
+}
+
+export function getLogs() {
+  return request({
+    url: '/log/getLogs',
+    method: 'get'
+  })
+}
+
+// 修改日志状态
+export function updateStatus(data) {
+  return request({
+    url: '/log/updateStatus',
+    method: 'post',
+    data
   })
 }

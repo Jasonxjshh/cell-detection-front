@@ -16,7 +16,7 @@
     </el-form>
     <div>
       <el-button type="success" :icon="Plus"
-        @click="dialogFormVisible = true, dialogTitle = '新增用户', roleInputDisabled = false, addorUpdateMode = 0">
+        @click="clearDialog">
         <span>新增</span>
       </el-button>
       <el-button type="primary" :icon="Edit" @click="fillDialog">
@@ -42,7 +42,7 @@
       <el-table-column property="age" label="年龄" header-align="center" align="center" width='100' />
       <el-table-column property="sex" label="性别" header-align="center" align="center" width='100' />
       <el-table-column property="createAt" label="创建时间" header-align="center" align="center" width='300' />
-      <el-table-column label="Operations" header-align="left" align="left">
+      <el-table-column label="操作" header-align="center" align="center">
         <template #default="scope">
           <el-button type="primary" :icon="Edit" circle @click="fillDialog"
             @mouseover="multipleTableRef.toggleRowSelection(scope.row, true)" />
@@ -129,6 +129,7 @@
 
 <script lang="ts" setup>
 import { onMounted, reactive, ref } from 'vue'
+import bcrypt from 'bcryptjs'
 import { ElTable, rowContextKey } from 'element-plus'
 import { add, getUsersByPage, update, deleteUsers } from "@/http/api.js"
 import {
@@ -226,7 +227,6 @@ const handleSelectionChange = (val: User[]) => {
 
 }
 
-
 const changeRole = () => {
   if (dialogForm.role == 0) {
     dialogForm.role = "管理员"
@@ -236,31 +236,23 @@ const changeRole = () => {
     dialogForm.role = "患者"
   }
 }
-const addorUpdateUser = (role) => {
-  dialogForm.password = "123456"
-  if (addorUpdateMode.value == 0) {
-    add(dialogForm).then(res => {
-      getAllUserData(role)
-    })
-      .catch(res => {
-        console.log("异常处理:" + res.message);
-        alert(res.message)
-      })
+const addorUpdateUser = async (role) => {
+  try {
+    if (addorUpdateMode.value == 0) {
+      dialogForm.password = "123456";
+      const res = await add(dialogForm);
+      getAllUserData(role);
+    } else if (addorUpdateMode.value == 1) {
+      dialogForm.role = multipleSelection.value[0].role;
+      dialogForm.id = multipleSelection.value[0].id;
+      const res = await update(dialogForm);
+      getAllUserData(role);
+    }
+  } catch (error) {
+    console.log("异常处理:", error.message);
+    alert(error.message);
   }
-  else if (addorUpdateMode.value == 1) {
-    dialogForm.role = multipleSelection.value[0].role
-
-    dialogForm.id = multipleSelection.value[0].id
-    update(dialogForm).then(res => {
-      getAllUserData(role)
-    }).catch(res => {
-      console.log("异常处理:" + res.message);
-      alert(res.message)
-    })
-  }
-
-
-}
+};
 
 const fillDialog = () => {
   if (multipleSelection.value.length != 1) {
@@ -281,6 +273,20 @@ const fillDialog = () => {
     dialogTitle.value = "修改用户"
     addorUpdateMode.value = 1
   }
+}
+const clearDialog = () => {
+  console.log(dialogForm);
+  dialogFormVisible.value = true
+  dialogTitle.value = '新增用户'
+  roleInputDisabled.value = false
+  addorUpdateMode.value = 0
+  dialogForm.name = null
+  dialogForm.username = null
+  dialogForm.phone = null
+  dialogForm.email = null
+  dialogForm.sex = null
+  dialogForm.age = null
+  dialogForm.role = null
 }
 
 

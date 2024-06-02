@@ -15,8 +15,7 @@
       </el-form-item>
     </el-form>
     <div>
-      <el-button type="success" :icon="Plus"
-        @click="dialogFormVisible = true, dialogTitle = '新增用户', roleInputDisabled = false, addorUpdateMode = 0">
+      <el-button type="success" :icon="Plus" @click="clearDialog">
         <span>新增</span>
       </el-button>
       <el-button type="primary" :icon="Edit" @click="fillDialog">
@@ -42,12 +41,10 @@
       <el-table-column property="age" label="年龄" header-align="center" align="center" width='100' />
       <el-table-column property="sex" label="性别" header-align="center" align="center" width='100' />
       <el-table-column property="createAt" label="创建时间" header-align="center" align="center" width='300' />
-      <el-table-column label="Operations" header-align="left" align="left">
+      <el-table-column label="操作" header-align="center" align="center">
         <template #default="scope">
-          <el-button type="primary" :icon="Edit" circle
-            @click="  fillDialog" 
-            @mouseover = "multipleTableRef.toggleRowSelection(scope.row, true)" 
-           />
+          <el-button type="primary" :icon="Edit" circle @click="fillDialog"
+            @mouseover="multipleTableRef.toggleRowSelection(scope.row, true)" />
           <el-button type="danger" :icon="Delete" circle @click="deleteUser(1)" />
         </template>
       </el-table-column>
@@ -131,6 +128,7 @@
 
 <script lang="ts" setup>
 import { onMounted, reactive, ref } from 'vue'
+import bcrypt from 'bcryptjs'
 import { ElTable, rowContextKey } from 'element-plus'
 import { add, getUsersByPage, update, deleteUsers } from "@/http/api.js"
 import {
@@ -227,7 +225,6 @@ const handleSelectionChange = (val: User[]) => {
 
 }
 
-
 const changeRole = () => {
   if (dialogForm.role == 0) {
     dialogForm.role = "管理员"
@@ -237,38 +234,30 @@ const changeRole = () => {
     dialogForm.role = "患者"
   }
 }
-const addorUpdateUser = (role) => {
-  dialogForm.password = "123456"
-  if (addorUpdateMode.value == 0) {
-    add(dialogForm).then(res => {
-      getAllUserData(role)
-    })
-      .catch(res => {
-        console.log("异常处理:" + res.message);
-        alert(res.message)
-      })
+const addorUpdateUser = async (role) => {
+  try {
+    if (addorUpdateMode.value == 0) {
+      dialogForm.password = "123456";
+      const res = await add(dialogForm);
+      getAllUserData(role);
+    } else if (addorUpdateMode.value == 1) {
+      dialogForm.role = multipleSelection.value[0].role;
+      dialogForm.id = multipleSelection.value[0].id;
+      const res = await update(dialogForm);
+      getAllUserData(role);
+    }
+  } catch (error) {
+    console.log("异常处理:", error.message);
+    alert(error.message);
   }
-  else if (addorUpdateMode.value == 1) {
-    dialogForm.role = multipleSelection.value[0].role
-
-    dialogForm.id = multipleSelection.value[0].id
-    update(dialogForm).then(res => {
-      getAllUserData(role)
-    }).catch(res => {
-      console.log("异常处理:" + res.message);
-      alert(res.message)
-    })
-  }
-  
-
-}
+};
 
 const fillDialog = () => {
   if (multipleSelection.value.length != 1) {
     alert("请选择一个您要编辑的用户！")
   } else {
     console.log(multipleSelection.value[0]);
-    
+
     dialogForm.name = multipleSelection.value[0].name
     dialogForm.username = multipleSelection.value[0].username
     dialogForm.phone = multipleSelection.value[0].phone
@@ -284,6 +273,21 @@ const fillDialog = () => {
   }
 }
 
+const clearDialog = () => {
+  console.log(dialogForm);
+  dialogFormVisible.value = true
+  dialogTitle.value = '新增用户'
+  roleInputDisabled.value = false
+  addorUpdateMode.value = 0
+  dialogForm.name = null
+  dialogForm.username = null
+  dialogForm.phone = null
+  dialogForm.email = null
+  dialogForm.sex = null
+  dialogForm.age = null
+  dialogForm.role = null
+}
+
 
 const deleteUser = (role) => {
   if (multipleSelection.value.length == 0) {
@@ -293,9 +297,9 @@ const deleteUser = (role) => {
     multipleSelection.value.forEach((item) => {
       userIDs.push(item.id)
     })
-    
+
     deleteUsers(userIDs).then(res => {
-    getAllUserData(role)
+      getAllUserData(role)
 
     }).catch(res => {
       console.log("异常处理:" + res.message);

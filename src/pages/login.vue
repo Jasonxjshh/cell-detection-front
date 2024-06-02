@@ -21,7 +21,7 @@
 			</el-form-item>
 			<el-row style="text-align: center;margin-top:-10px">
 				<el-link type="primary" style="margin-right: auto;">忘记密码</el-link>
-				<el-link type="primary" @click="gotoRegister()">用户注册</el-link>
+				<el-link type="primary" @click="goToRegister()">用户注册</el-link>
 			</el-row>
 		</el-form>
 	</div>
@@ -32,6 +32,7 @@ import { User, Lock } from '@element-plus/icons-vue'
 import { ref, reactive } from 'vue'
 import { login, getUserByToken } from "../http/api.js"
 import { useRouter } from 'vue-router'
+import bcrypt from 'bcryptjs'
 import { useRoleStore, useTokenStore } from '../stores/user.js'
 
 const router = useRouter()
@@ -43,9 +44,10 @@ const form = reactive({
 })
 const tokenStore = useTokenStore()
 const roleStore = useRoleStore()
-const doSubmit = () => {
-	console.log(form);
-	login(form).then(res => {
+const doSubmit = async () => {
+	try {
+		console.log(form);
+		const res = await login(form);
 		console.log(res);
 		/* 登录正常 */
 		const token = res.token;
@@ -54,16 +56,19 @@ const doSubmit = () => {
 		console.log(role);
 		tokenStore.setToken(token);
 		roleStore.setRole(role);
-		router.push({ name: 'home' })
-		
-	})
-		.catch(res => {
-			console.log("异常处理:" + res.message);
-			alert(res.message)
+		if (role == 0) {
+			router.push({ name: 'adminHome' });
+		} else {
+			router.push({ name: 'home' });
 		}
+	} catch (error) {
+		console.log("异常处理:" + error.message);
+		alert(error.message);
+	}
+};
 
-		)
-
+const goToRegister = () => {
+	router.push({name: 'register'})
 }
 
 </script>

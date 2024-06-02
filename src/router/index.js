@@ -1,9 +1,14 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import login from '@/pages/login.vue'
+import register from '@/pages/register.vue'
 import home from '@/pages/home.vue'
-import doctorManagement from "@/components/main/doctorManagement"
-import patientManagement from "@/components/main/patientManagement"
+import adminHome from "@/components/main/adminHome"
+import logManagement from '@/components/main/logManagement.vue'
+import doctorManagement from '@/components/main/doctorManagement.vue'
+import patientManagement from '@/components/main/patientManagement.vue'
 import profile from "@/components/main/profile"
+
+
 
 
 import InquiryFive from '@/components/main/InquiryFive.vue'
@@ -19,8 +24,12 @@ const routes = [
     component: home,
     meta: { requiresAuth: true },
     children: [
-
-
+      {
+        path: '/adminHome',
+        name: 'adminHome',
+        component: adminHome,
+        meta: { requiresAuth: true }
+      },
 
 
       {
@@ -43,20 +52,25 @@ const routes = [
         path: '/doctor_management',
         name: 'doctor_management',
         component: doctorManagement,
-        meta: {requiresAuth: true}
+        meta: { requiresAuth: true }
       },
       {
         path: '/patient_management',
         name: 'patient_management',
         component: patientManagement,
-        meta: {requiresAuth: true}
+        meta: { requiresAuth: true }
       },
-
+      {
+        path: '/log_management',
+        name: 'log_management',
+        component: logManagement,
+        meta: { requiresAuth: true }
+      },
       {
         path: '/profile',
         name: 'profile',
         component: profile,
-        meta: {requiresAuth: true}
+        meta: { requiresAuth: true }
       }
     ]
   },
@@ -64,6 +78,11 @@ const routes = [
     path: '/login',
     name: 'login',
     component: login
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: register
   }
   /* ,
 
@@ -100,17 +119,17 @@ router.beforeEach((to, from, next) => {
   const role = localStorage.getItem('role')
   console.log(role);
   // 这个路由需要认证，检查是否有 token 
-  if (to.matched.some(record => record.meta.requiresAuth)){
+  if (to.matched.some(record => record.meta.requiresAuth)) {
     // 没有 token，重定向到登录页面
-    if (!token){
+    if (!token) {
       next({
         path: '/login'
       })
-    }else{
-    // 有 token，继续导航
+    } else {
+      // 有 token，继续导航
       next()
     }
-  }else{
+  } else {
     next()
   }
 })

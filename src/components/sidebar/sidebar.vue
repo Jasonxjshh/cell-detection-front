@@ -14,6 +14,7 @@
                     </template>
                     <el-menu-item index="doctor_management">医生管理</el-menu-item>
                     <el-menu-item index="patient_management">患者管理</el-menu-item>
+                    <el-menu-item index="log_management">日志管理</el-menu-item>
                 </el-sub-menu>
                     <!-- 医生菜单 -->
                     <el-sub-menu v-if="role === '1'" index="doctor">

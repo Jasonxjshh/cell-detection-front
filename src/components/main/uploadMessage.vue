@@ -42,7 +42,7 @@
       <el-table-column prop="age"  label="年龄" header-align="center" align="center" width='100' />
       <el-table-column property="sex" label="性别" header-align="center" align="center" width='100' />
 <!--      <el-table-column property="createAt" label="创建时间" header-align="center" align="center" width='300' />-->
-      <el-table-column label="Operations" header-align="left" align="left">
+      <el-table-column label="操作" header-align="center" align="center" width='250'>
         <template #default="scope">
           <el-button type="primary"
             @click="openInquiryDialog(scope.row)"

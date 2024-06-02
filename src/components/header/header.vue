@@ -1,7 +1,7 @@
 <!--头部导航栏-->
 <template>
     <div class="topNavigation">
-        <div class="headerMenu">细胞检测系统</div>
+            <div class="headerMenu" @click="gotoHome">细胞检测系统</div>
         <div style="flex: 1"></div>
         <div style="width: 450px; margin: 10px; text-align: right;">
             <el-avatar class="ml-2" :size="30" :src="imgurl" />
@@ -55,6 +55,15 @@ const quit = () => {
 
 const gotoPage = (root) => {
     router.push(root)
+}
+
+const gotoHome = () => {
+    console.log(user.value.role);
+    if(user.value.role == 0){
+			router.push({ name: 'adminHome' })
+		}else{
+			router.push({ name: 'home' })
+		}
 }
 </script>
 
