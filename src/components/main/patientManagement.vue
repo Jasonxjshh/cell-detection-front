@@ -116,7 +116,7 @@
 
     </el-dialog>
     <div style="margin-top: 20px;">
-      <el-pagination @current-change="handleCurrentChange, getAllUserData(2)" small background
+      <el-pagination @current-change="handleCurrentChange" small background
         layout=" prev, pager, next, total" :total="totalItems" v-model:current-page="currentPage" />
     </div>
 
@@ -214,6 +214,7 @@ const getAllUserData = (role) => {
 const handleCurrentChange = (val: number) => {
   console.log(val);
   currentPage.value = val;
+  getAllUserData(2)
 };
 const onSubmit = () => {
   console.log('submit!')

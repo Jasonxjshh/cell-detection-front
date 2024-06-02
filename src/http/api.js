@@ -22,8 +22,8 @@ export function getUserByToken(token) {
   return request({
     url: '/user/getUSerByToken',
     method: 'get',
-    params:{
-      token: token 
+    params: {
+      token: token
     }
   })
 }
@@ -33,8 +33,8 @@ export function detection(userid) {
   return request({
     url: '/detect/get_from_filepath',
     method: 'post',
-    params:{
-      userid: userid 
+    params: {
+      userid: userid
     }
   })
 }
@@ -44,8 +44,8 @@ export function downloaded() {
   return request({
     url: '/detect/get_from_filepath',
     method: 'post',
-    params:{
-      userid: userid 
+    params: {
+      userid: userid
     }
   })
 }
@@ -82,8 +82,8 @@ export function add(data) {
 // 获得所有用户信息
 export function getUsersByPage(params) {
   return request({
-      url: '/user/getUsersByPage/'+ Number(params['currentPage']) + '/' + Number(params['pageSize'])+ '/' + Number(params['role']),
-      method: 'get',
+    url: '/user/getUsersByPage/' + Number(params['currentPage']) + '/' + Number(params['pageSize']) + '/' + Number(params['role']),
+    method: 'get',
   })
 }
 
@@ -92,8 +92,8 @@ export function getUsersByPage(params) {
 // 获得所有日志信息
 export function getLogsByPage(params) {
   return request({
-      url: '/log/getLogsByPage/'+ Number(params['currentPage']) + '/' + Number(params['pageSize']),
-      method: 'get',
+    url: '/log/getLogsByPage/' + Number(params['currentPage']) + '/' + Number(params['pageSize']),
+    method: 'get',
   })
 }
 
@@ -119,5 +119,14 @@ export function updateStatus(data) {
     url: '/log/updateStatus',
     method: 'post',
     data
+  })
+}
+
+
+// 获得所有公告信息
+export function getUsersByID(params) {
+  return request({
+    url: '/user/getUsersByID/' + Number(params['currentPage']) + '/' + Number(params['pageSize']) + '/' + Number(params['id']),
+    method: 'get',
   })
 }

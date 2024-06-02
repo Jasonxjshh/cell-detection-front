@@ -87,7 +87,7 @@
 
         </el-dialog>
         <div style="margin-top: 20px;">
-            <el-pagination @current-change="handleCurrentChange, getAllLogData" small background
+            <el-pagination @current-change="handleCurrentChange" small background
                 layout=" prev, pager, next, total" :total="totalItems" v-model:current-page="currentPage" />
         </div>
 
@@ -173,6 +173,7 @@ const getAllLogData = () => {
 const handleCurrentChange = (val: number) => {
     console.log(val);
     currentPage.value = val;
+    getAllLogData()
 };
 const onSubmit = () => {
     console.log('submit!')
