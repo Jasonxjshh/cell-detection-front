@@ -20,6 +20,8 @@ import result from '@/components/main/result.vue'
 
 import Word from '@/components/main/Word.vue'
 
+import question from '@/components/main/question.vue'
+
 
 
 const routes = [
@@ -33,6 +35,14 @@ const routes = [
         path: '/adminHome',
         name: 'adminHome',
         component: adminHome,
+        meta: { requiresAuth: true }
+      },
+
+
+      {
+        path: '/question',
+        name: 'question',
+        component: question,
         meta: { requiresAuth: true }
       },
 

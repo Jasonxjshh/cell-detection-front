@@ -126,6 +126,16 @@ export function updateStatus(data) {
 // 获得所有公告信息
 export function getUsersByID(params) {
   return request({
+      url: '/user/getUsersByID/'+ Number(params['currentPage']) + '/' + Number(params['pageSize'])+ '/' + Number(params['id']),
+      method: 'get',
+  })
+}
+
+
+
+// 获得所有公告信息
+export function getUsersByID(params) {
+  return request({
     url: '/user/getUsersByID/' + Number(params['currentPage']) + '/' + Number(params['pageSize']) + '/' + Number(params['id']),
     method: 'get',
   })
