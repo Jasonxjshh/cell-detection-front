@@ -28,6 +28,29 @@ export function getUserByToken(token) {
   })
 }
 
+// 检测
+export function detection(userid) {
+  return request({
+    url: '/detect/get_from_filepath',
+    method: 'post',
+    params:{
+      userid: userid 
+    }
+  })
+}
+
+// 检测
+export function downloaded() {
+  return request({
+    url: '/detect/get_from_filepath',
+    method: 'post',
+    params:{
+      userid: userid 
+    }
+  })
+}
+
+
 // 修改用户信息
 export function update(data) {
   return request({

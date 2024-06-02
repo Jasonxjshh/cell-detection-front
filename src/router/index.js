@@ -15,6 +15,11 @@ import InquiryFive from '@/components/main/InquiryFive.vue'
 
 import uploadMessage from '@/components/main/uploadMessage.vue'
 
+import result from '@/components/main/result.vue'
+
+
+import Word from '@/components/main/Word.vue'
+
 
 
 const routes = [
@@ -30,6 +35,26 @@ const routes = [
         component: adminHome,
         meta: { requiresAuth: true }
       },
+
+
+      {
+        path: '/Word',
+        name: 'Word',
+        component: Word,
+        meta: { requiresAuth: true }
+      },
+
+
+
+
+
+      {
+        path: '/result',
+        name: 'result',
+        component: result,
+        meta: { requiresAuth: true }
+      },
+
 
 
       {

@@ -1,3 +1,4 @@
+<!-- <script src="../../main.js"></script> -->
 <template>
   <div class="container">
     <el-form :inline="true" :model="formInline" :span="24" class="demo-form-inline">
@@ -48,7 +49,7 @@
             @click="openInquiryDialog(scope.row)"
             @mouseover = "multipleTableRef.toggleRowSelection(scope.row, true)"
           >上传</el-button>
-          <el-button type="danger"   @click="opendetect" > 检测 </el-button>
+          <el-button type="danger"   @click="opendetect(scope.row)" > 检测 </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -287,6 +288,8 @@ const openInquiryDialog = (row) => { // 新增的用于打开浮窗的方法
   inquiryDialogVisible.value = true;
 }
 const opendetect = (row) => { // 新增的用于打开浮窗的方法
+
+  localStorage.setItem("upload_user_img_id" , row.id)
   detectVisible.value = true;
 }
 const fillDialog = () => {
