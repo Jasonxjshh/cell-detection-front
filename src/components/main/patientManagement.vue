@@ -240,7 +240,7 @@ const changeRole = () => {
 const addorUpdateUser = async (role) => {
   try {
     if (addorUpdateMode.value == 0) {
-      dialogForm.password = "123456";
+      dialogForm.password = await bcrypt.hash("123456", 10)
       const res = await add(dialogForm);
       getAllUserData(role);
     } else if (addorUpdateMode.value == 1) {

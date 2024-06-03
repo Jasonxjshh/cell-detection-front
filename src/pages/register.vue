@@ -72,6 +72,7 @@
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { useRoleStore, useTokenStore } from '../stores/user.js'
+import bcrypt from 'bcryptjs'
 import useVuelidate from '@vuelidate/core'
 import { required, email, minLength, helpers, alpha, integer } from '@vuelidate/validators'
 import { register } from "../http/api.js"
@@ -119,7 +120,8 @@ const doRegister = async () => {
     }
 
     try {
-        console.log(dialogForm);
+        dialogForm.password = await bcrypt.hash(dialogForm.password, 10)
+        console.log(dialogForm)
         const res = await register(dialogForm);
         console.log(res);
         const token = res.token;
