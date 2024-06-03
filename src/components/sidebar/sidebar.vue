@@ -37,6 +37,17 @@
                         <!-- <el-menu-item index="result_management">结果管理</el-menu-item> -->
                     </el-sub-menu>
 
+                    <el-sub-menu v-if="role === '1'" index="test">
+                        <template #title>
+                            <el-icon>
+                                <grid />
+                            </el-icon>
+                            <span>医生测试</span>
+                        </template>
+                        <el-menu-item index="question">细胞基础知识认识</el-menu-item>
+                        <!-- <el-menu-item index="result_management">结果管理</el-menu-item> -->
+                    </el-sub-menu>
+
                     <!-- 患者菜单 -->
                     <el-sub-menu v-if="role === '2'" index="patient">
                         <template #title>
